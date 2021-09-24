@@ -1,0 +1,35 @@
+<section class="container-fluid" *ngIf="tracks && pageInfo">
+
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12" *ngFor="let item of tracks | paginate: pageInfo">
+            <div class="row card no-gutters ">
+
+                <div class="col-md-3 col-sm-2 col-2">
+                    <picture class="card-img">
+                        <ng-container *ngFor="let img of item.image">
+                            <source media="(min-width: 1200px)" [srcset]="img['#text']" *ngIf="img.size == 'extralarge'">
+                            <source media="(max-width: 1200px)" [srcset]="img['#text']" *ngIf="img.size == 'large'">
+                            <source media="(max-width: 768px)" [srcset]="img['#text']" *ngIf="img.size == 'medium'">
+                            <source media="(max-width: 576px)" [srcset]="img['#text']" *ngIf="img.size == 'small'">
+                        </ng-container>
+
+                        <img class="img-fluid" src="" [alt]="item.name">
+                    </picture>
+                </div>
+
+                <div class="col-md-9 col-sm-10 col-10">
+                    <p class="font-weight-bold dark-grey-text card-title">{{ item.name }}</p>
+                    <p class="card-description">{{ item.artist && item.artist.name }}</p>
+                    <a class="dark-grey-text text-truncate card-url" target="_blank" [href]="item.artist && item.artist.url" *ngIf="item.artist && item.artist.url">{{
+                        item.artist && item.artist.url }}</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="row justify-content-center">
+
+        <pagination-controls *ngIf="tracks && pageInfo" (pageChange)="changePageNumber($event)"></pagination-controls>
+    </div>
+</section>

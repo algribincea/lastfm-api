@@ -1,0 +1,58 @@
+pagination-controls {
+    align-self: center;
+}
+
+.card {
+    flex-direction: row;
+    border: none;
+    overflow: hidden;
+    margin-top: 15px;
+    flex-wrap: nowrap;
+    &-title {
+        margin-bottom: 5px;
+    }
+    &-description {
+        margin: 0;
+    }
+    &-url {
+        max-width: 100%;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-decoration: underline;
+    }
+    &-img {
+        img {
+            max-width: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+    @media (min-width: 576px) {
+        margin: 10px auto 0;
+    }
+}
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+    >.col,
+    >[class*="col-"] {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+}
+
+.container-fluid {
+    margin-top: 20px;
+}
+
+pagination-controls {
+    margin-top: 30px;
+}
+
+:host ::ng-deep {
+    .ngx-pagination .current {
+        background-color: #263238;
+    }
+}
