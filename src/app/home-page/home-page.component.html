@@ -1,7 +1,7 @@
-<section class="container-fluid" *ngIf="tracks && pageInfo">
+<section class="container-fluid" *ngIf="tracks | async as tracks">
 
     <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-6 col-12" *ngFor="let item of tracks | paginate: pageInfo">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12" *ngFor="let item of tracks.track | paginate: tracks.pageInfo">
             <div class="row card no-gutters ">
 
                 <div class="col-md-3 col-sm-2 col-2">
@@ -30,6 +30,6 @@
     </div>
     <div class="row justify-content-center">
 
-        <pagination-controls *ngIf="tracks && pageInfo" (pageChange)="changePageNumber($event)"></pagination-controls>
+        <pagination-controls [maxSize]="configS.maxSize" [autoHide]="configS.autoHide" [responsive]="configS.responsive" [previousLabel]="configS.previousLabel" [nextLabel]="configS.nextLabel" (pageChange)="changePageNumber($event)"></pagination-controls>
     </div>
 </section>

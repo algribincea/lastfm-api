@@ -1,0 +1,47 @@
+.form {
+    overflow: hidden;
+}
+
+.display-4 {
+    text-align: center;
+}
+
+.md-form {
+    label {
+        left: 15px;
+    }
+    input[type="text"] {
+        padding: 10px;
+        margin-top: 5px;
+        &:focus:not([readonly]) {
+            box-shadow: 0 1px 0 0 #e63900;
+            border-bottom: 1px solid #e63900;
+        }
+    }
+    input[type="text"]:focus:not([readonly])+label {
+        color: #e63900;
+    }
+    @media (max-width: 767px) {
+        margin-bottom: 0;
+    }
+}
+
+.btn {
+    max-width: 100%;
+    width: 100%;
+    padding: .84rem 0;
+}
+
+pagination-controls {
+    margin-top: 30px;
+}
+
+:host ::ng-deep {
+    .ngx-pagination {
+        text-align: center;
+        padding: 0;
+        .current {
+            background-color: #263238;
+        }
+    }
+}

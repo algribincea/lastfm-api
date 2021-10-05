@@ -1,1 +1,44 @@
-<p>search-page works!</p>
+<div class="container">
+
+    <form class="row form" [formGroup]="form" novalidate (submit)="searchTracks()">
+        <div class="col-md-5 col-sm-6 col-12 md-form">
+            <input mdbInput type="text" name="text" id="track" class="form-control" formControlName="track">
+            <label for="track" class="">Track name</label>
+            <p *ngIf="form.get('track')?.invalid && (form.get('track')?.dirty || form.get('track')?.touched)">
+                <span *ngIf="form.get('track')?.errors?.required" class="alert alert-danger">
+                    Required field
+                </span>
+                <span *ngIf="form.get('track')?.errors?.minlength" class="alert alert-danger">
+                    min 2 characters
+                </span>
+                <span *ngIf="form.get('track')?.errors?.maxlength" class="alert alert-danger">
+                    max 256 characters
+                </span>
+                <span *ngIf="form.get('track')?.errors?.whitespace" class="alert alert-danger">
+                    you have white spaces
+                 </span>
+            </p>
+        </div>
+        <div class="col-md-5 col-sm-6 col-12 md-form">
+            <input mdbInput type="text" name="text" id="artist" class="form-control" formControlName="artist">
+            <label for="artist" class="">Artist name</label>
+            <p *ngIf="form.get('artist')?.invalid && (form.get('artist')?.dirty || form.get('artist')?.touched)">
+                <span *ngIf="form.get('artist')?.errors?.maxlength" class="alert alert-danger">
+                    max 256 characters
+                </span>
+            </p>
+        </div>
+        <div class="col-md-2 col-sm-12 col-12">
+            <button mdbBtn color="danger" class="btn my-4" type="submit">Search</button>
+        </div>
+    </form>
+
+    <div class="list-group" *ngIf="tracks | async as tracks">
+        <a href="#" class="list-group-item list-group-item-action waves-light" mdbWavesEffect *ngFor="let item of tracks.track | paginate: tracks.pageInfo"> {{ item.name }} - {{ item.artist }}</a>
+        <h1 class="display-4" *ngIf="tracks.track && tracks.track.length == 0">No results!</h1>
+
+        <pagination-controls [maxSize]="configS.maxSize" [autoHide]="configS.autoHide" [responsive]="configS.responsive" [previousLabel]="configS.previousLabel" [nextLabel]="configS.nextLabel" (pageChange)="changePageNumber($event)"></pagination-controls>
+    </div>
+
+
+</div>

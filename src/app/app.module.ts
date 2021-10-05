@@ -8,8 +8,9 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HomePageComponent } from './home-page/home-page.component';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ApiInterceptor } from './api.interceptor';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ApiInterceptor } from './shared/interceptors/api.interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

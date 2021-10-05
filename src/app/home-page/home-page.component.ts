@@ -1,6 +1,8 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ConfigService } from '../shared/services/config.service';
 import { QueriesService } from '../shared/services/queries.service';
-import { SsrService } from '../shared/services/ssr.service';
 
 @Component({
   selector: 'app-home-page',
@@ -8,15 +10,11 @@ import { SsrService } from '../shared/services/ssr.service';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-
-  // sometimes pagination give errors
-
-  tracks: any[] = [];
-  pageInfo: any
+  tracks: Observable<any>
 
   constructor(
-    private _query: QueriesService,
-    private ssr: SsrService
+    private queryS: QueriesService,
+    public configS: ConfigService
   ) { }
 
   ngOnInit(): void {
@@ -24,28 +22,21 @@ export class HomePageComponent implements OnInit {
   }
 
   getTopTracks(page: number) {
-    this._query.getTopTracks(page).subscribe((data: any) => {
-      this.tracks = []
-
-      if (data && data.tracks) {
-        this.pageInfo = {}
-        this.pageInfo['itemsPerPage'] = parseInt(data.tracks['@attr'].perPage);
-        this.pageInfo['currentPage'] = parseInt(data.tracks['@attr'].page);
-        this.pageInfo['totalItems'] = parseInt(data.tracks['@attr'].total);
-        this.tracks = data.tracks.track
-      }
-    })
+    this.tracks = this.queryS.getTopTracks(page).pipe(
+      map((val: any) => {
+        let tracks = {}
+        tracks['track'] = val.tracks.track
+        tracks['pageInfo'] = {
+          'currentPage': parseInt(val.tracks['@attr'].page),
+          'itemsPerPage': parseInt(val.tracks['@attr'].perPage),
+          'totalItems': parseInt(val.tracks['@attr'].total)
+        }
+        return tracks
+      }))
   }
 
-  changePageNumber(event: any) {
-    this.pageInfo.currentPage = event;
+  changePageNumber(event: number) {
     this.getTopTracks(event);
-    if (this.ssr.isBrowser) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
   }
 
 }
