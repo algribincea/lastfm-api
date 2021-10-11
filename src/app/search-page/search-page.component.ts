@@ -37,14 +37,7 @@ export class SearchPageComponent implements OnInit {
         track: this.form.controls.track.value,
         artist: this.form.controls.artist.value,
       }
-      console.log(data);
-      //  let data: any = this.form.valueChanges.pipe(debounceTime(500))
-      //  console.log(data);
-       
-      //  .subscribe(selectedValue => {
-      //   console.log('form value changed')
-      //   console.log(selectedValue)
-      // })
+
 
       this.tracks = this.queryS.getTrackSearch(page, data.track, data.artist)
         .pipe(
@@ -56,16 +49,11 @@ export class SearchPageComponent implements OnInit {
               'itemsPerPage': parseInt(val.results['opensearch:itemsPerPage']),
               'totalItems': parseInt(val.results['opensearch:totalResults'])
             }
-            console.log('pipe-map', tracks)
             return tracks
           })
         )
-
-      console.log(this.tracks);
-      
       // this.form.reset();
     } else {
-      console.log('else', this.form);
       this.formS.validateAllFormFields(this.form);
     }
   }

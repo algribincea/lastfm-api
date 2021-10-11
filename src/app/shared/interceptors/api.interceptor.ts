@@ -20,8 +20,6 @@ export class ApiInterceptor implements HttpInterceptor {
     return next.handle(cloned)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          
           if (error.status == 403)
             console.log('error', error.status );
           return throwError(error);
